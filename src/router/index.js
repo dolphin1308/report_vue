@@ -8,6 +8,9 @@ import AdminLayout from '@/views/AdminLayout.vue'
 import StudentLayout from '../views/StudentLayout.vue'
 import TeacherLayout from '../views/TeacherLayout.vue'
 import DepartmentLayout from '../views/DepartmentLayout.vue'
+import StudentInfo from '@/components/student/StudentInfo.vue'
+import TeacherInfo from '@/components/teacher/TeacherInfo.vue'
+import DepartmentInfo from '@/components/department/DepartmentInfo.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -49,35 +52,38 @@ const router = createRouter({
       ]
     },
     {
-      path: '/student/home',
+      path: '/student',
       component: StudentLayout,
+      redirect: '/student/info',
       meta: { requiresAuth: true },
       children: [
         {
-          path: '',
-          component: () => import('../views/StudentLayout.vue')
+          path: 'info',
+          component: StudentInfo
         }
       ]
     },
     {
-      path: '/teacher/home',
+      path: '/teacher',
       component: TeacherLayout,
+      redirect: '/teacher/info',
       meta: { requiresAuth: true },
       children: [
         {
-          path: '',
-          component: () => import('../views/TeacherLayout.vue')
+          path: 'info',
+          component: TeacherInfo
         }
       ]
     },
     {
-      path: '/department/home',
+      path: '/department',
       component: DepartmentLayout,
+      redirect: '/department/info',
       meta: { requiresAuth: true },
       children: [
         {
-          path: '',
-          component: () => import('../views/DepartmentLayout.vue')
+          path: 'info',
+          component: DepartmentInfo
         }
       ]
     }

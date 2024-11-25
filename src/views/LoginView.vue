@@ -36,7 +36,7 @@ const login = async () => {
       if (res.code === 200) {
         ElMessage.success('登录成功')
         tokenStore.setToken(res.data)
-        router.push('/student/home')
+        router.push('/student')
       } else {
         ElMessage.error(res.message || '登录失败')
       }
@@ -45,7 +45,7 @@ const login = async () => {
       if (res.code === 200) {
         ElMessage.success('登录成功')
         tokenStore.setToken(res.data)
-        router.push('/department/home')
+        router.push('/department')
       } else {
         ElMessage.error(res.message || '登录失败')
       }
@@ -54,7 +54,7 @@ const login = async () => {
       if (res.code === 200) {
         ElMessage.success('登录成功')
         tokenStore.setToken(res.data)
-        router.push('/teacher/home')
+        router.push('/teacher')
       } else {
         ElMessage.error(res.message || '登录失败')
       }

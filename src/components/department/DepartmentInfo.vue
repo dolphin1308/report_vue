@@ -1,20 +1,20 @@
 <template>
-  <div class="student-info-container">
+  <div class="department-info-container">
     <el-card class="info-card" :body-style="{ padding: '0px' }">
       <div class="banner">
         <div class="banner-content">
           <div class="avatar-container">
             <el-avatar 
               :size="120" 
-              :src="studentInfo.img" 
+              :src="departmentInfo.img" 
               class="hover-scale"
             />
           </div>
           <div class="basic-info">
-            <h1>{{ studentInfo.name }}</h1>
-            <div class="student-no">
-              <el-tag size="large" effect="dark" class="hover-scale">
-                {{ studentInfo.no }}
+            <h1>{{ departmentInfo.name }}</h1>
+            <div class="department-no">
+              <el-tag size="large" effect="dark" class="hover-scale" type="success">
+                部门编号：{{ departmentInfo.no }}
               </el-tag>
             </div>
           </div>
@@ -24,16 +24,19 @@
       <div class="info-content">
         <div class="quick-info">
           <div class="info-item hover-scale">
-            <i class="el-icon-school"></i>
-            <span>{{ studentInfo.grade }}级</span>
+            <el-icon><Office /></el-icon>
+            <span>部门名称</span>
+            <div class="info-value">{{ departmentInfo.name }}</div>
           </div>
           <div class="info-item hover-scale">
-            <i class="el-icon-office-building"></i>
-            <span>{{ studentInfo.major }}</span>
+            <el-icon><User /></el-icon>
+            <span>部门编号</span>
+            <div class="info-value">{{ departmentInfo.no }}</div>
           </div>
           <div class="info-item hover-scale">
-            <i class="el-icon-user-solid"></i>
-            <span>{{ studentInfo.classInfo }}</span>
+            <el-icon><School /></el-icon>
+            <span>所属学院</span>
+            <div class="info-value">{{ departmentInfo.college?.name || '暂无' }}</div>
           </div>
         </div>
 
@@ -47,48 +50,25 @@
             border 
             class="hover-shadow"
           >
-            <el-descriptions-item label="姓名">
+            <el-descriptions-item label="部门名称">
               <el-tag size="small" effect="plain" type="success">
-                {{ studentInfo.name }}
+                {{ departmentInfo.name }}
               </el-tag>
             </el-descriptions-item>
-            <el-descriptions-item label="性别">
-              <el-tag 
-                size="small" 
-                :type="studentInfo.sex === '男' ? 'primary' : 'danger'"
-                effect="plain"
-              >
-                {{ studentInfo.sex }}
+            <el-descriptions-item label="部门编号">
+              <el-tag size="small" effect="plain" type="primary">
+                {{ departmentInfo.no }}
               </el-tag>
             </el-descriptions-item>
-            <el-descriptions-item label="生日">
+            <el-descriptions-item label="部门主管">
               <el-tag size="small" effect="plain" type="warning">
-                {{ formatDate(studentInfo.birthday) }}
+                {{ departmentInfo.leader?.name || '暂未���定' }}
               </el-tag>
-            </el-descriptions-item>
-            <el-descriptions-item label="年级">
-              <el-tag size="small" effect="plain" type="info">
-                {{ studentInfo.grade }}级
-              </el-tag>
-            </el-descriptions-item>
-            <el-descriptions-item label="专业">
-              {{ studentInfo.major }}
-            </el-descriptions-item>
-            <el-descriptions-item label="班级">
-              {{ studentInfo.classInfo }}
-            </el-descriptions-item>
-            <el-descriptions-item label="邮箱">
-              <a :href="'mailto:' + studentInfo.email" class="email-link">
-                {{ studentInfo.email }}
-              </a>
-            </el-descriptions-item>
-            <el-descriptions-item label="电话">
-              <a :href="'tel:' + studentInfo.phone" class="phone-link">
-                {{ studentInfo.phone }}
-              </a>
             </el-descriptions-item>
             <el-descriptions-item label="所属学院">
-              {{ studentInfo.collegeName }}
+              <el-tag size="small" effect="plain" type="info">
+                {{ departmentInfo.college?.name || '暂无' }}
+              </el-tag>
             </el-descriptions-item>
           </el-descriptions>
         </div>
@@ -100,33 +80,32 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getLoginUserInfo } from '@/apis/system'
+import { 
+  OfficeBuilding as Office, 
+  User, 
+  School 
+} from '@element-plus/icons-vue'
 
-const studentInfo = ref({})
+const departmentInfo = ref({})
 
-const formatDate = (dateString) => {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  return date.toLocaleDateString('zh-CN')
-}
-
-const fetchStudentInfo = async () => {
+const fetchDepartmentInfo = async () => {
   try {
     const response = await getLoginUserInfo()
     if (response.code === 200) {
-      studentInfo.value = response.data
+      departmentInfo.value = response.data
     }
   } catch (error) {
-    console.error('获取学生信息失败：', error)
+    console.error('获取部门信息失败：', error)
   }
 }
 
 onMounted(() => {
-  fetchStudentInfo()
+  fetchDepartmentInfo()
 })
 </script>
 
 <style scoped>
-.student-info-container {
+.department-info-container {
   padding: 20px;
   max-width: 900px;
   margin: 0 auto;
@@ -145,7 +124,7 @@ onMounted(() => {
 }
 
 .banner {
-  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+  background: linear-gradient(135deg, #67C23A 0%, #95D475 100%);
   padding: 40px 20px;
   color: white;
 }
@@ -175,7 +154,7 @@ onMounted(() => {
   }
 }
 
-.student-no {
+.department-no {
   margin-top: 10px;
 }
 
@@ -191,20 +170,28 @@ onMounted(() => {
 
 .info-item {
   text-align: center;
-  padding: 15px 25px;
-  border-radius: 8px;
+  padding: 20px 30px;
+  border-radius: 12px;
   background: #f5f7fa;
+  min-width: 200px;
   
-  i {
-    font-size: 24px;
-    color: #409EFF;
+  .el-icon {
+    font-size: 28px;
+    color: #67C23A;
     margin-bottom: 8px;
-    display: block;
   }
   
   span {
-    color: #606266;
+    color: #909399;
     font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .info-value {
+    color: #303133;
+    font-size: 16px;
+    font-weight: 600;
   }
 }
 
@@ -242,17 +229,6 @@ onMounted(() => {
   color: #606266;
 }
 
-.email-link, .phone-link {
-  color: #409EFF;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.email-link:hover, .phone-link:hover {
-  color: #66b1ff;
-  text-decoration: underline;
-}
-
 :deep(.el-divider__text) {
   background-color: transparent;
 }
@@ -269,7 +245,12 @@ onMounted(() => {
   
   .quick-info {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+  }
+  
+  .info-item {
+    min-width: unset;
+    width: 100%;
   }
   
   :deep(.el-descriptions) {
