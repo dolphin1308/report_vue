@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/LoginView.vue'
-import AdminHome from '@/views/AdminHome.vue'
-import TeacherHome from '@/views/TeacherHome.vue'
-import StudentHome from '@/views/StudentHome.vue'
 import StudentList from '@/components/admin/StudentList.vue'
 import TeacherList from '@/components/admin/TeacherList.vue'
 import DepartmentList from '@/components/admin/DepartmentList.vue'
 import CollegeList from '@/components/admin/CollegeList.vue'
-import MainLayout from '@/views/MainLayout.vue'
+import AdminLayout from '@/views/AdminLayout.vue'
+import StudentLayout from '../views/StudentLayout.vue'
+import TeacherLayout from '../views/TeacherLayout.vue'
+import DepartmentLayout from '../views/DepartmentLayout.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: MainLayout,
+      component: AdminLayout,
       redirect: '/student-list',
       children: [
         {
@@ -49,22 +49,37 @@ const router = createRouter({
       ]
     },
     {
-      path: '/admin/home',
-      name: 'AdminHome',
-      component: AdminHome,
-      meta: { requiresAuth: true, role: 'admin' },
+      path: '/student/home',
+      component: StudentLayout,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          component: () => import('../views/StudentLayout.vue')
+        }
+      ]
     },
     {
       path: '/teacher/home',
-      name: 'TeacherHome',
-      component: TeacherHome,
-      meta: { requiresAuth: true, role: 'teacher' },
+      component: TeacherLayout,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          component: () => import('../views/TeacherLayout.vue')
+        }
+      ]
     },
     {
-      path: '/student/home',
-      name: 'StudentHome',
-      component: StudentHome,
-      meta: { requiresAuth: true, role: 'student' },
+      path: '/department/home',
+      component: DepartmentLayout,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          component: () => import('../views/DepartmentLayout.vue')
+        }
+      ]
     }
   ]
 })

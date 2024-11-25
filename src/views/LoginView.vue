@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-
+import {useTokenStore} from '@/stores/token'
+const tokenStore = useTokenStore()
 const router = useRouter()
 
 const loginValue = ref({
@@ -25,11 +26,7 @@ const login = async () => {
       const res = await UserLogin(loginValue.value)
       if (res.code === 200) {
         ElMessage.success('登录成功')
-        console.log(res.data)
-        // 存储用户信息
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
-        localStorage.setItem('userRole', 'admin')
-        // 跳转到管理员主界面
+        tokenStore.setToken(res.data)
         router.push('/student-list')
       } else {
         ElMessage.error(res.message || '登录失败')
@@ -38,9 +35,17 @@ const login = async () => {
       const res = await UserLogin(loginValue.value)
       if (res.code === 200) {
         ElMessage.success('登录成功')
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
-        localStorage.setItem('userRole', 'student')
+        tokenStore.setToken(res.data)
         router.push('/student/home')
+      } else {
+        ElMessage.error(res.message || '登录失败')
+      }
+    } else if (loginValue.value.role === 'department') {
+      const res = await UserLogin(loginValue.value)
+      if (res.code === 200) {
+        ElMessage.success('登录成功')
+        tokenStore.setToken(res.data)
+        router.push('/department/home')
       } else {
         ElMessage.error(res.message || '登录失败')
       }
@@ -48,13 +53,12 @@ const login = async () => {
       const res = await UserLogin(loginValue.value)
       if (res.code === 200) {
         ElMessage.success('登录成功')
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
-        localStorage.setItem('userRole', 'teacher')
+        tokenStore.setToken(res.data)
         router.push('/teacher/home')
       } else {
         ElMessage.error(res.message || '登录失败')
       }
-    }
+    } 
   } catch (error) {
     console.error('登录失败：', error)
     ElMessage.error('登录失败，请检查网络连接')
@@ -90,6 +94,7 @@ const login = async () => {
           <option value="">请选择用户类型</option>
           <option value="student">学生</option>
           <option value="teacher">教师</option>
+          <option value="department">部门</option>
           <option value="admin">管理员</option>
         </select>
       </div>

@@ -118,6 +118,7 @@
         </span>
       </template>
     </el-dialog>
+    <button @click="buttonClick">按钮</button>
   </div>
 </template>
 
@@ -267,6 +268,14 @@ const handleClose = (done) => {
   studentFormRef.value?.resetFields()
   done()
 }
+
+import {getStudentInfo} from '@/apis/student'
+const buttonClick=async ()=>{
+  const response=await getStudentInfo()
+  console.log("buttonClick:response-->"+response.data)
+}
+
+
 
 onMounted(() => {
   fetchStudents()

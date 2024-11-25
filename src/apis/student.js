@@ -46,3 +46,7 @@ export const updateStudent = (student) => {
     ...student
   })
 }
+
+export const getStudentInfo = () => {
+  return http.get('/info')
+}
