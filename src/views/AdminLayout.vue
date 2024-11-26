@@ -8,7 +8,8 @@
         @select="handleSelect"
         background-color="#304156"
         text-color="#fff"
-        active-text-color="#409EFF">
+        active-text-color="#409EFF"
+      >
         <div class="logo">
           <h2>学术报告管理系统</h2>
         </div>
@@ -28,6 +29,10 @@
           <el-icon><Reading /></el-icon>
           <span>学院管理</span>
         </el-menu-item>
+        <el-menu-item>
+          <el-icon><Close /></el-icon>
+          <span style="color: red" @click="loginout()">退出登陆</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
@@ -45,25 +50,32 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { 
-  User, 
-  UserFilled, 
-  Management, 
-  Reading 
-} from '@element-plus/icons-vue'
+import { User, UserFilled, Management, Reading } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref('')
 
-const handleSelect = (index) => {
+const handleSelect = index => {
   router.push(`/${index}`)
+}
+import { useTokenStore } from '@/stores/token'
+import { ElMessage } from 'element-plus'
+const tokenStore = useTokenStore()
+const loginout = () => {
+  tokenStore.removeToken()
+  ElMessage.success('退出登陆！')
+  router.push('/login')
 }
 
 // 监听路由变化
-watch(() => route.path, (newPath) => {
-  activeMenu.value = newPath.split('/')[1]
-}, { immediate: true })
+watch(
+  () => route.path,
+  newPath => {
+    activeMenu.value = newPath.split('/')[1]
+  },
+  { immediate: true },
+)
 
 onMounted(() => {
   activeMenu.value = route.path.split('/')[1]
@@ -110,4 +122,4 @@ onMounted(() => {
 .fade-leave-to {
   opacity: 0;
 }
-</style> 
+</style>

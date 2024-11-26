@@ -16,8 +16,8 @@ export const getAllStudent = (param1, param2, param3, param4) => {
       page: param1,
       rows: param2,
       searchField: param3,
-      searchString: param4
-    }
+      searchString: param4,
+    },
   })
 }
 
@@ -34,19 +34,34 @@ export const editDeleteStudent = (student, action) => {
 }
 
 // 删除学生
-export const deleteStudent = (student) => {
+export const deleteStudent = student => {
   return http.put('/student/delete', {
-    ...student
+    ...student,
   })
 }
 
 // 编辑学生
-export const updateStudent = (student) => {
+export const updateStudent = student => {
   return http.post('/student/edit', {
-    ...student
+    ...student,
   })
 }
 
 export const getStudentInfo = () => {
   return http.get('/info')
+}
+
+// 获取参加报告的历史信息
+export const getReportHistory = () => {
+  return http.get('/my-present')
+}
+
+// 获取开放的报告
+export const getOpenReport = () => {
+  return http.get('/appointing-meeting')
+}
+
+// 学生预约会议
+export const studentAppointMeeting = meeting => {
+  return http.post('/applyMeeting', meeting)
 }

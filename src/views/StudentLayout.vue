@@ -7,13 +7,26 @@
         @select="handleSelect"
         background-color="#304156"
         text-color="#fff"
-        active-text-color="#409EFF">
+        active-text-color="#409EFF"
+      >
         <div class="logo">
           <h2>学生工作台</h2>
         </div>
         <el-menu-item index="info">
           <el-icon><User /></el-icon>
           <span>个人信息</span>
+        </el-menu-item>
+        <el-menu-item index="open-report">
+          <el-icon><Reading /></el-icon>
+          <span>预约大厅</span>
+        </el-menu-item>
+        <el-menu-item index="report-history">
+          <el-icon><History /></el-icon>
+          <span>报告历史</span>
+        </el-menu-item>
+        <el-menu-item @click="logout">
+          <el-icon><Close /></el-icon>
+          <span>退出登录</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -37,13 +50,22 @@ const router = useRouter()
 const route = useRoute()
 const activeMenu = ref('')
 
-const handleSelect = (index) => {
+const logout = () => {
+  localStorage.removeItem('token')
+  router.push('/login')
+}
+
+const handleSelect = index => {
   router.push(`/student/${index}`)
 }
 
-watch(() => route.path, (newPath) => {
-  activeMenu.value = newPath.split('/').pop()
-}, { immediate: true })
+watch(
+  () => route.path,
+  newPath => {
+    activeMenu.value = newPath.split('/').pop()
+  },
+  { immediate: true },
+)
 
 onMounted(() => {
   activeMenu.value = route.path.split('/').pop()
@@ -91,4 +113,3 @@ onMounted(() => {
   opacity: 0;
 }
 </style>
-  

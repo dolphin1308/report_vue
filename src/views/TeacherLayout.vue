@@ -7,13 +7,22 @@
         @select="handleSelect"
         background-color="#304156"
         text-color="#fff"
-        active-text-color="#409EFF">
+        active-text-color="#409EFF"
+      >
         <div class="logo">
           <h2>教师工作台</h2>
         </div>
         <el-menu-item index="info">
           <el-icon><User /></el-icon>
           <span>个人信息</span>
+        </el-menu-item>
+        <el-menu-item index="report">
+          <el-icon><Reading /></el-icon>
+          <span>我的报告</span>
+        </el-menu-item>
+        <el-menu-item @click="logout">
+          <el-icon><Close /></el-icon>
+          <span style="color: red">退出登陆</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -31,19 +40,28 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { User } from '@element-plus/icons-vue'
+import { Close, Reading, User } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref('')
 
-const handleSelect = (index) => {
+const handleSelect = index => {
   router.push(`/teacher/${index}`)
 }
 
-watch(() => route.path, (newPath) => {
-  activeMenu.value = newPath.split('/').pop()
-}, { immediate: true })
+const logout = () => {
+  localStorage.removeItem('token')
+  router.push('/login')
+}
+
+watch(
+  () => route.path,
+  newPath => {
+    activeMenu.value = newPath.split('/').pop()
+  },
+  { immediate: true },
+)
 
 onMounted(() => {
   activeMenu.value = route.path.split('/').pop()
@@ -91,4 +109,3 @@ onMounted(() => {
   opacity: 0;
 }
 </style>
-  

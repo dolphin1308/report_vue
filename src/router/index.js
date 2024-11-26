@@ -29,27 +29,27 @@ const router = createRouter({
           path: 'student-list',
           name: 'StudentList',
           component: StudentList,
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: true },
         },
         {
           path: 'teacher-list',
           name: 'TeacherList',
           component: TeacherList,
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: true },
         },
         {
           path: 'department-list',
           name: 'DepartmentList',
           component: DepartmentList,
-          meta: { requiresAuth: true }
+          meta: { requiresAuth: true },
         },
         {
           path: 'college-list',
           name: 'CollegeList',
           component: CollegeList,
-          meta: { requiresAuth: true }
-        }
-      ]
+          meta: { requiresAuth: true },
+        },
+      ],
     },
     {
       path: '/student',
@@ -59,9 +59,17 @@ const router = createRouter({
       children: [
         {
           path: 'info',
-          component: StudentInfo
-        }
-      ]
+          component: StudentInfo,
+        },
+        {
+          path: 'report-history',
+          component: () => import('@/components/student/ReportHistory.vue'),
+        },
+        {
+          path: 'open-report',
+          component: () => import('@/components/student/OpenReport.vue'),
+        },
+      ],
     },
     {
       path: '/teacher',
@@ -71,9 +79,13 @@ const router = createRouter({
       children: [
         {
           path: 'info',
-          component: TeacherInfo
-        }
-      ]
+          component: TeacherInfo,
+        },
+        {
+          path: 'report',
+          component: () => import('@/components/teacher/TeacherReport.vue'),
+        },
+      ],
     },
     {
       path: '/department',
@@ -83,11 +95,11 @@ const router = createRouter({
       children: [
         {
           path: 'info',
-          component: DepartmentInfo
-        }
-      ]
-    }
-  ]
+          component: DepartmentInfo,
+        },
+      ],
+    },
+  ],
 })
 
 export default router
