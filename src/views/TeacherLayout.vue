@@ -20,6 +20,18 @@
           <el-icon><Reading /></el-icon>
           <span>我的报告</span>
         </el-menu-item>
+        <el-menu-item index="meeting-schedule">
+          <el-icon><Reading /></el-icon>
+          <span>会议安排</span>
+        </el-menu-item>
+        <el-menu-item index="history-meeting">
+          <el-icon><Reading /></el-icon>
+          <span>历史会议</span>
+        </el-menu-item>
+        <el-menu-item index="message-center">
+          <el-icon><Reading /></el-icon>
+          <span>消息中心</span>
+        </el-menu-item>
         <el-menu-item @click="logout">
           <el-icon><Close /></el-icon>
           <span style="color: red">退出登陆</span>

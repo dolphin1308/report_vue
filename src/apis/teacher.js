@@ -30,3 +30,13 @@ export const updateTeacher = teacher => {
 export const getTeacherReport = () => {
   return http.get('/my-report')
 }
+
+// 获取教师的历史会议
+export const getTeacherHistoryMeeting = () => {
+  return http.get('/pass-meetings')
+}
+
+// 获取教师的消息中心
+export const getTeacherMessageCenter = () => {
+  return http.get('/messages')
+}

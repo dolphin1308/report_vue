@@ -85,6 +85,19 @@ const router = createRouter({
           path: 'report',
           component: () => import('@/components/teacher/TeacherReport.vue'),
         },
+        {
+          path: 'meeting-schedule',
+          component: () => import('@/components/teacher/MeetingSchedule.vue'),
+        },
+        {
+          path: 'history-meeting',
+          component: () =>
+            import('@/components/teacher/TeacherHistoryMeeting.vue'),
+        },
+        {
+          path: 'message-center',
+          component: () => import('@/components/teacher/MessageCenter.vue'),
+        },
       ],
     },
     {
@@ -96,6 +109,31 @@ const router = createRouter({
         {
           path: 'info',
           component: DepartmentInfo,
+        },
+        {
+          path: 'report-review',
+          component: () =>
+            import('@/components/department/AAOReportReview.vue'),
+        },
+        {
+          path: 'report-pass',
+          component: () => import('@/components/department/AAOReportPass.vue'),
+        },
+        {
+          path: 'report-count',
+          component: () => import('@/components/department/AAOReportCount.vue'),
+        },
+        {
+          path: 'wait-time',
+          component: () => import('@/components/department/WaitTime.vue'),
+        },
+        {
+          path: 'open-book',
+          component: () => import('@/components/department/OpenBook.vue'),
+        },
+        {
+          path: 'ready-meeting',
+          component: () => import('@/components/department/ReadyMeeting.vue'),
         },
       ],
     },

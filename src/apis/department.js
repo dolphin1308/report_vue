@@ -7,21 +7,30 @@ export const getAllDepartment = (param1, param2, param3, param4) => {
       page: param1,
       rows: param2,
       searchField: param3,
-      searchString: param4
-    }
+      searchString: param4,
+    },
   })
 }
 
 // 删除部门
-export const deleteDepartment = (department) => {
+export const deleteDepartment = department => {
   return http.put('/department/delete', {
-    ...department
+    ...department,
   })
 }
 
 // 编辑部门
-export const updateDepartment = (department) => {
+export const updateDepartment = department => {
   return http.post('/department/edit', {
-    ...department
+    ...department,
   })
+}
+
+/**
+ * AAO
+ */
+
+// 查询已通过的审核
+export const getPassedAAOReport = () => {
+  return http.get('/pass')
 }

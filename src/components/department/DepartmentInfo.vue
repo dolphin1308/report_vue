@@ -4,16 +4,21 @@
       <div class="banner">
         <div class="banner-content">
           <div class="avatar-container">
-            <el-avatar 
-              :size="120" 
-              :src="departmentInfo.img" 
+            <el-avatar
+              :size="120"
+              :src="departmentInfo.img"
               class="hover-scale"
             />
           </div>
           <div class="basic-info">
             <h1>{{ departmentInfo.name }}</h1>
             <div class="department-no">
-              <el-tag size="large" effect="dark" class="hover-scale" type="success">
+              <el-tag
+                size="large"
+                effect="dark"
+                class="hover-scale"
+                type="success"
+              >
                 部门编号：{{ departmentInfo.no }}
               </el-tag>
             </div>
@@ -36,7 +41,9 @@
           <div class="info-item hover-scale">
             <el-icon><School /></el-icon>
             <span>所属学院</span>
-            <div class="info-value">{{ departmentInfo.college?.name || '暂无' }}</div>
+            <div class="info-value">
+              {{ departmentInfo.college?.name || '暂无' }}
+            </div>
           </div>
         </div>
 
@@ -45,11 +52,7 @@
         </el-divider>
 
         <div class="detail-info">
-          <el-descriptions 
-            :column="2" 
-            border 
-            class="hover-shadow"
-          >
+          <el-descriptions :column="2" border class="hover-shadow">
             <el-descriptions-item label="部门名称">
               <el-tag size="small" effect="plain" type="success">
                 {{ departmentInfo.name }}
@@ -80,19 +83,17 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getLoginUserInfo } from '@/apis/system'
-import { 
-  OfficeBuilding as Office, 
-  User, 
-  School 
-} from '@element-plus/icons-vue'
+import { OfficeBuilding as Office, User, School } from '@element-plus/icons-vue'
+import { useRoleStore } from '@/stores/role'
 
 const departmentInfo = ref({})
-
+const roleStore = useRoleStore()
 const fetchDepartmentInfo = async () => {
   try {
     const response = await getLoginUserInfo()
     if (response.code === 200) {
       departmentInfo.value = response.data
+      roleStore.setRole(departmentInfo.value.name)
     }
   } catch (error) {
     console.error('获取部门信息失败：', error)
@@ -124,7 +125,7 @@ onMounted(() => {
 }
 
 .banner {
-  background: linear-gradient(135deg, #67C23A 0%, #95D475 100%);
+  background: linear-gradient(135deg, #67c23a 0%, #95d475 100%);
   padding: 40px 20px;
   color: white;
 }
@@ -174,13 +175,13 @@ onMounted(() => {
   border-radius: 12px;
   background: #f5f7fa;
   min-width: 200px;
-  
+
   .el-icon {
     font-size: 28px;
-    color: #67C23A;
+    color: #67c23a;
     margin-bottom: 8px;
   }
-  
+
   span {
     color: #909399;
     font-size: 14px;
@@ -238,21 +239,21 @@ onMounted(() => {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .avatar-container {
     margin: 0 0 20px 0;
   }
-  
+
   .quick-info {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .info-item {
     min-width: unset;
     width: 100%;
   }
-  
+
   :deep(.el-descriptions) {
     padding: 10px;
   }
