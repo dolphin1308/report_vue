@@ -66,6 +66,10 @@ const router = createRouter({
           component: () => import('@/components/student/ReportHistory.vue'),
         },
         {
+          path: 'my-booking',
+          component: () => import('@/components/student/MyBooking.vue'),
+        },
+        {
           path: 'open-report',
           component: () => import('@/components/student/OpenReport.vue'),
         },
@@ -80,6 +84,10 @@ const router = createRouter({
         {
           path: 'info',
           component: TeacherInfo,
+        },
+        {
+          path: 'public-report',
+          component: () => import('@/components/teacher/PublicReport.vue'),
         },
         {
           path: 'report',
@@ -97,6 +105,10 @@ const router = createRouter({
         {
           path: 'message-center',
           component: () => import('@/components/teacher/MessageCenter.vue'),
+        },
+        {
+          path: 'dean-approval',
+          component: () => import('@/components/teacher/DeanApproval.vue'),
         },
       ],
     },

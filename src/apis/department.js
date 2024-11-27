@@ -34,3 +34,22 @@ export const updateDepartment = department => {
 export const getPassedAAOReport = () => {
   return http.get('/pass')
 }
+
+/**
+ * 宣传部
+ */
+
+// 查看等待排期的报告
+export const getWaitingReport = () => {
+  return http.get('/wait-arrange')
+}
+
+// 查看开放预约的报告
+export const getOpenReport = () => {
+  return http.get('/appointing')
+}
+
+// 查看即将开始的报告
+export const getStartingReport = () => {
+  return http.get('/prepare-meeting')
+}

@@ -20,13 +20,17 @@
           <el-icon><Reading /></el-icon>
           <span>预约大厅</span>
         </el-menu-item>
+        <el-menu-item index="my-booking">
+          <el-icon><Reading /></el-icon>
+          <span>我的预约</span>
+        </el-menu-item>
         <el-menu-item index="report-history">
           <el-icon><History /></el-icon>
           <span>报告历史</span>
         </el-menu-item>
         <el-menu-item @click="logout">
           <el-icon><Close /></el-icon>
-          <span>退出登录</span>
+          <span style="color: red">退出登录</span>
         </el-menu-item>
       </el-menu>
     </el-aside>

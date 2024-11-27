@@ -33,11 +33,11 @@
             <span>等待排期</span>
           </el-menu-item>
           <el-menu-item index="open-book">
-            <el-icon><ReadingLamp /></el-icon>
+            <el-icon><UserFilled /></el-icon>
             <span>开放预约</span>
           </el-menu-item>
           <el-menu-item index="ready-meeting">
-            <el-icon><ReadingLamp /></el-icon>
+            <el-icon><Management /></el-icon>
             <span>准备会议</span>
           </el-menu-item>
         </div>
@@ -65,7 +65,13 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { Close, ReadingLamp, User } from '@element-plus/icons-vue'
+import {
+  Close,
+  Management,
+  ReadingLamp,
+  User,
+  UserFilled,
+} from '@element-plus/icons-vue'
 import { useRoleStore } from '@/stores/role'
 
 const roleStore = useRoleStore()

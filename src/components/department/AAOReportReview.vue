@@ -16,10 +16,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { getAuditRecord } from '@/apis/system'
+import { ref, onMounted } from 'vue'
 
 const selectedOption = ref('')
 const otherInput = ref('')
+
+const reviewList = ref([])
+
+const getReview = async () => {
+  const res = await getAuditRecord()
+  if (res.code === 200) {
+    reviewList.value = res.data
+  } else {
+    console.error('获取审核记录失败')
+  }
+}
+
+onMounted(() => {
+  getReview()
+})
 </script>
 
 <style scoped>

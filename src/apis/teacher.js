@@ -40,3 +40,8 @@ export const getTeacherHistoryMeeting = () => {
 export const getTeacherMessageCenter = () => {
   return http.get('/messages')
 }
+
+// 院长获取未审批的报告
+export const getDeanApproval = () => {
+  return http.get('/leader-audit')
+}

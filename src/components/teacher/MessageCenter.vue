@@ -5,6 +5,9 @@
         <div class="card-header">
           <h2>消息中心</h2>
           <div class="header-right">
+            <el-button type="primary" @click="clearMessages"
+              >清空消息</el-button
+            >
             <el-tag type="info">共 {{ messages.length }} 条消息</el-tag>
           </div>
         </div>
@@ -59,6 +62,10 @@ const getMessages = async () => {
   } catch (error) {
     console.error('获取消息失败：', error)
   }
+}
+
+const clearMessages = () => {
+  console.log('清空消息')
 }
 
 const formatDateTime = dateString => {

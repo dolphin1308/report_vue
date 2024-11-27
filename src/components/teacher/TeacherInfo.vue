@@ -4,22 +4,23 @@
       <div class="banner">
         <div class="banner-content">
           <div class="avatar-container">
-            <el-avatar 
-              :size="120" 
-              :src="teacherInfo.img" 
-              class="hover-scale"
-            />
+            <el-avatar :size="120" :src="teacherInfo.img" class="hover-scale" />
           </div>
           <div class="basic-info">
             <h1>{{ teacherInfo.name }}</h1>
             <div class="teacher-tags">
-              <el-tag size="large" effect="dark" class="hover-scale" type="warning">
+              <el-tag
+                size="large"
+                effect="dark"
+                class="hover-scale"
+                type="warning"
+              >
                 工号：{{ teacherInfo.no }}
               </el-tag>
-              <el-tag 
-                size="large" 
-                effect="dark" 
-                class="hover-scale position-tag" 
+              <el-tag
+                size="large"
+                effect="dark"
+                class="hover-scale position-tag"
                 type="danger"
               >
                 {{ teacherInfo.position }}
@@ -39,27 +40,34 @@
           <div class="info-item hover-scale">
             <el-icon><School /></el-icon>
             <span>所属学院</span>
-            <div class="info-value">{{ teacherInfo.collegeName || '暂无' }}</div>
+            <div class="info-value">
+              {{ teacherInfo.collegeName || '暂无' }}
+            </div>
           </div>
           <div class="info-item hover-scale">
             <el-icon><Medal /></el-icon>
             <span>身份</span>
             <div class="info-value">
-              <el-tag 
-                v-if="teacherInfo.isCollegeLeader === 1" 
-                size="small" 
+              <el-tag
+                v-if="teacherInfo.isCollegeLeader === 1"
+                size="small"
                 type="success"
               >
                 院系领导
               </el-tag>
-              <el-tag 
-                v-if="teacherInfo.isDepartmentLeader === 1" 
-                size="small" 
+              <el-tag
+                v-if="teacherInfo.isDepartmentLeader === 1"
+                size="small"
                 type="warning"
               >
                 部门主管
               </el-tag>
-              <span v-if="!teacherInfo.isCollegeLeader && !teacherInfo.isDepartmentLeader">
+              <span
+                v-if="
+                  !teacherInfo.isCollegeLeader &&
+                  !teacherInfo.isDepartmentLeader
+                "
+              >
                 普通教师
               </span>
             </div>
@@ -71,11 +79,7 @@
         </el-divider>
 
         <div class="detail-info">
-          <el-descriptions 
-            :column="2" 
-            border 
-            class="hover-shadow"
-          >
+          <el-descriptions :column="2" border class="hover-shadow">
             <el-descriptions-item label="姓名">
               <el-tag size="small" effect="plain" type="success">
                 {{ teacherInfo.name }}
@@ -87,8 +91,8 @@
               </el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="性别">
-              <el-tag 
-                size="small" 
+              <el-tag
+                size="small"
                 :type="teacherInfo.sex === '男' ? 'primary' : 'danger'"
                 effect="plain"
               >
@@ -115,23 +119,28 @@
             </el-descriptions-item>
             <el-descriptions-item label="管理身份">
               <div class="role-tags">
-                <el-tag 
-                  v-if="teacherInfo.isCollegeLeader === 1" 
-                  size="small" 
+                <el-tag
+                  v-if="teacherInfo.isCollegeLeader === 1"
+                  size="small"
                   type="success"
                   class="role-tag"
                 >
                   院系领导
                 </el-tag>
-                <el-tag 
-                  v-if="teacherInfo.isDepartmentLeader === 1" 
-                  size="small" 
+                <el-tag
+                  v-if="teacherInfo.isDepartmentLeader === 1"
+                  size="small"
                   type="warning"
                   class="role-tag"
                 >
                   部门主管
                 </el-tag>
-                <span v-if="!teacherInfo.isCollegeLeader && !teacherInfo.isDepartmentLeader">
+                <span
+                  v-if="
+                    !teacherInfo.isCollegeLeader &&
+                    !teacherInfo.isDepartmentLeader
+                  "
+                >
                   普通教师
                 </span>
               </div>
@@ -147,10 +156,12 @@
 import { ref, onMounted } from 'vue'
 import { getLoginUserInfo } from '@/apis/system'
 import { UserFilled, School, Medal } from '@element-plus/icons-vue'
+import { useRoleStore } from '@/stores/role'
 
 const teacherInfo = ref({})
+const roleStore = useRoleStore()
 
-const formatDate = (dateString) => {
+const formatDate = dateString => {
   if (!dateString) return ''
   const date = new Date(dateString)
   return date.toLocaleDateString('zh-CN')
@@ -161,6 +172,7 @@ const fetchTeacherInfo = async () => {
     const response = await getLoginUserInfo()
     if (response.code === 200) {
       teacherInfo.value = response.data
+      roleStore.setRole(teacherInfo.value.isCollegeLeader)
     }
   } catch (error) {
     console.error('获取教师信息失败：', error)
@@ -192,7 +204,7 @@ onMounted(() => {
 }
 
 .banner {
-  background: linear-gradient(135deg, #E6A23C 0%, #F56C6C 100%);
+  background: linear-gradient(135deg, #e6a23c 0%, #f56c6c 100%);
   padding: 40px 20px;
   color: white;
 }
@@ -229,7 +241,7 @@ onMounted(() => {
 }
 
 .position-tag {
-  background: linear-gradient(45deg, #F56C6C, #E6A23C);
+  background: linear-gradient(45deg, #f56c6c, #e6a23c);
 }
 
 .info-content {
@@ -248,13 +260,13 @@ onMounted(() => {
   border-radius: 12px;
   background: #f5f7fa;
   min-width: 200px;
-  
+
   .el-icon {
     font-size: 28px;
-    color: #E6A23C;
+    color: #e6a23c;
     margin-bottom: 8px;
   }
-  
+
   span {
     color: #909399;
     font-size: 14px;
@@ -290,7 +302,7 @@ onMounted(() => {
 }
 
 .phone-link {
-  color: #409EFF;
+  color: #409eff;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -332,25 +344,25 @@ onMounted(() => {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .avatar-container {
     margin: 0 0 20px 0;
   }
-  
+
   .teacher-tags {
     justify-content: center;
   }
-  
+
   .quick-info {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .info-item {
     min-width: unset;
     width: 100%;
   }
-  
+
   :deep(.el-descriptions) {
     padding: 10px;
   }

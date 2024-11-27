@@ -16,6 +16,10 @@
           <el-icon><User /></el-icon>
           <span>个人信息</span>
         </el-menu-item>
+        <el-menu-item index="public-report">
+          <el-icon><Reading /></el-icon>
+          <span>发布报告</span>
+        </el-menu-item>
         <el-menu-item index="report">
           <el-icon><Reading /></el-icon>
           <span>我的报告</span>
@@ -32,6 +36,12 @@
           <el-icon><Reading /></el-icon>
           <span>消息中心</span>
         </el-menu-item>
+        <div v-if="roleStore.role">
+          <el-menu-item index="dean-approval">
+            <el-icon><Reading /></el-icon>
+            <span>院长审批</span>
+          </el-menu-item>
+        </div>
         <el-menu-item @click="logout">
           <el-icon><Close /></el-icon>
           <span style="color: red">退出登陆</span>
@@ -53,7 +63,9 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Close, Reading, User } from '@element-plus/icons-vue'
+import { useRoleStore } from '@/stores/role'
 
+const roleStore = useRoleStore()
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref('')
